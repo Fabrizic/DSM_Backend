@@ -10,28 +10,84 @@ def create_emotion():
     emotion = Emotion(name)
     db.session.add(emotion)
     db.session.commit()
-    return make_response(jsonify({'message': 'Emotion created'}), 200)
+    
+    if not emotion:
+        data = { 
+            'message': 'Emotion not created' ,
+            'status': 400,
+            'data': {}
+        }
 
-@emotion_route.route('/emotions', methods=['GET'])
+        return make_response(jsonify(data), 400)
+    
+    data = {
+        'message': 'Emotion created',
+        'status': 201,
+        'data': {
+            'id': emotion.id,
+            'name': emotion.name
+        }
+    }
+
+    return make_response(jsonify(data), 201)
+
+@emotion_route.route('/emotion', methods=['GET'])
 def get_emotions():
     emotions = Emotion.query.all()
-    return jsonify([emotion.serialize() for emotion in emotions])
+    data = {
+        'message': 'Emotions fetched',
+        'status': 200,
+        'data': []
+    }
+
+    for emotion in emotions:
+        data['data'].append({
+            'id': emotion.id,
+            'name': emotion.name
+        })
+
+    return make_response(jsonify(data), 200)
 
 @emotion_route.route('/emotion/<int:id>', methods=['GET'])
 def get_emotion(id):
     emotion = Emotion.query.get(id)
-    return jsonify(emotion.serialize())
+    data = {
+        'message': 'Emotion fetched',
+        'status': 200,
+        'data': {
+            'id': emotion.id,
+            'name': emotion.name
+        }
+    }
+
+    return make_response(jsonify(data), 200)
 
 @emotion_route.route('/emotion/<int:id>', methods=['PUT'])
 def update_emotion(id):
     emotion = Emotion.query.get(id)
     emotion.name = request.json['name']
     db.session.commit()
-    return make_response(jsonify({'message': 'Emotion updated'}), 200)
+    data = {
+        'message': 'Emotion updated',
+        'status': 200,
+        'data': {
+            'id': emotion.id,
+            'name': emotion.name
+        }
+    }
+
+    return make_response(jsonify(data), 200)
 
 @emotion_route.route('/emotion/<int:id>', methods=['DELETE'])
 def delete_emotion(id):
     emotion = Emotion.query.get(id)
     db.session.delete(emotion)
     db.session.commit()
-    return make_response(jsonify({'message': 'Emotion deleted'}), 200)
+    data = {
+        'message': 'Emotion deleted',
+        'status': 200,
+        'data': {}
+    }
+
+    return make_response(jsonify(data), 200)
+

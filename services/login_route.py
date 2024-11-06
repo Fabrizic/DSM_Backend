@@ -8,9 +8,9 @@ login_route = Blueprint('login_route', __name__)
 def login():
     username = request.json['username']
     password = request.json['password']
-    roleid = request.json['roleid']
+    role = request.json['role']
 
-    login = Users.query.filter_by(username=username, roleid=roleid).first()
+    login = Users.query.filter_by(username=username, role=role).first()
 
     if login and login.check_password(password):
         data = {
@@ -32,12 +32,6 @@ def login():
     }
 
     return make_response(jsonify(data), 400)
-    
-@login_route.route('/register', methods=['POST'])
-def register():
-    ## This is a simple example, you should validate the data before saving it
-
-    return make_response(jsonify({'message': 'User created'}), 200)
 
 @login_route.route('/logins', methods=['GET'])
 def get_logins():

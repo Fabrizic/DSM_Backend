@@ -2,7 +2,7 @@ from utils.db import db
 from dataclasses import dataclass
 
 @dataclass
-class Template_test:
+class Template_test(db.Model):
     __tablename__ = 'template_test'
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
     author: str = db.Column(db.String(65), nullable=False)

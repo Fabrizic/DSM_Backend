@@ -13,9 +13,9 @@ class Person(db.Model):
     name: str = db.Column(db.String(60), nullable=False)
     phone: str = db.Column(db.String(15), nullable=False)
     second_last_name: str = db.Column(db.String(60), nullable=False)
-    document_type: int = db.Column(db.Integer, ForeignKey('document_type.id'), nullable=False)  
-    gender: int = db.Column(db.Integer, ForeignKey('gender.id'),nullable=False)
-    ubigeo: str = db.Column(db.String(6), ForeignKey('ubigeo.ubigeo'), nullable=False) 
+    document_type: int = db.Column(db.Integer, db.ForeignKey('document_type.id'), nullable=False)
+    gender: int = db.Column(db.Integer, db.ForeignKey('gender.id'), nullable=False)
+    ubigeo: str = db.Column(db.String(6), db.ForeignKey('ubigeo.ubigeo'), nullable=False)
 
     def __init__(self, document_character, birth_date, email, last_name, name, phone, second_last_name, document_type, gender, ubigeo):
         self.document_character = document_character
