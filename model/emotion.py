@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Emotion(db.Model):
-    __tablename__ = 'emotion'
+    __tablename__ = 'emotions'
     id: int = db.Column(db.Integer ,primary_key=True, autoincrement=True)
     name: str = db.Column(db.String(50), nullable=False)
 
