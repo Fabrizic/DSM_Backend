@@ -12,7 +12,7 @@ def login():
     role = request.json['role']
 
     login = Users.query.filter_by(username=username, role=role).first()
-    Person.query.filter_by(document_character=login.id_person).first()
+    person = Person.query.filter_by(document_character=login.id_person).first()
 
     if login and login.check_password(password):
         data = {
@@ -20,7 +20,8 @@ def login():
             'status': 200,
             'data': {
                 'username': login.username,
-                'id_person': login.id_person
+                'id_person': login.id_person,
+                'userName': person.name + ' ' + person.last_name
             }
         }
 
