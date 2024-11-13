@@ -8,6 +8,7 @@ class Emotion_detection(db.Model):
     id: int = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_user: int = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     id_emotion: int = db.Column(db.Integer, db.ForeignKey('emotion.id'), nullable=False)
+    id_session: int = db.Column(db.Integer, db.ForeignKey('session.id'), nullable=False)
     detection_time: TIMESTAMP = db.Column(db.TIMESTAMP(timezone=False), nullable=False, server_default=func.now())
     confidence: float = db.Column(db.Float, nullable=False)
 

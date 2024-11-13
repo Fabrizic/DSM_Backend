@@ -21,3 +21,48 @@ def get_ubigeo():
     }
 
     return make_response(jsonify(data), 200)
+
+@ubigeo_route.route('/departamentos', methods=['GET'])
+def get_departments():
+    departments = Ubigeo.query.with_entities(Ubigeo.departament).distinct().all()
+    data = {
+        'message': 'Todos los departamentos',
+        'status': 200,
+        'data': [
+            {
+                'departament': department.departament
+            } for department in departments
+        ]
+    }
+
+    return make_response(jsonify(data), 200)
+
+@ubigeo_route.route('/departamentos/<string:departament', methods=['GET'])
+def get_provinces(departament):
+    provinces = Ubigeo.query.with_entities(Ubigeo.province).filter_by(departament=departament).distinct().all()
+    data = {
+        'message': 'Todas las provincias',
+        'status': 200,
+        'data': [
+            {
+                'province': province.province
+            } for province in provinces
+        ]
+    }
+
+    return make_response(jsonify(data), 200)
+
+@ubigeo_route.route('/departamentos/<string:departament>/provincias/<string:province>', methods=['GET'])
+def get_districts(departament, province):
+    districts = Ubigeo.query.with_entities(Ubigeo.district).filter_by(departament=departament, province=province).distinct().all()
+    data = {
+        'message': 'Todos los distritos',
+        'status': 200,
+        'data': [
+            {
+                'district': district.district
+            } for district in districts
+        ]
+    }
+
+    return make_response(jsonify(data), 200)
