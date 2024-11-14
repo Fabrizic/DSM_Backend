@@ -4,6 +4,7 @@ from model.person import Person
 from model.users import Users
 from model.ubigeo import Ubigeo
 from model.document_type import DocumentType
+from model.gender import Gender
 
 register_route = Blueprint('register_route', __name__)
 
@@ -25,6 +26,7 @@ def create_register():
     password = request.json['password']
     role = request.json['role']
 
+    gender = Gender.query.filter_by(gender_character=gender).first()
     document_type = DocumentType.query.filter_by(document_type=document_type).first()
     ubigeo = Ubigeo.query.filter_by(departament=department, province=province, district=district).first()
 
@@ -42,7 +44,7 @@ def create_register():
         phone=phone,
         second_last_name=second_last_name,
         document_type=document_type.id,
-        gender=gender,
+        gender=gender.id,
         ubigeo=ubigeo
     )
 

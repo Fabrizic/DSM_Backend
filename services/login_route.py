@@ -38,7 +38,19 @@ def login():
 @login_route.route('/logins', methods=['GET'])
 def get_logins():
     logins = Users.query.all()
-    return jsonify([login.serialize() for login in logins])
+    data = {
+        'message': 'All logins',
+        'status': 200,
+        'data': [
+            {
+                'id': login.id,
+                'username': login.username,
+                'id_person': login.id_person
+            } for login in logins
+        ]
+    }
+
+    return make_response(jsonify(data), 200)
 
 @login_route.route('/login/<int:id>', methods=['GET'])
 def get_login(id):
