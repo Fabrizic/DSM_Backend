@@ -27,7 +27,7 @@ def create_register():
     role = request.json['role']
 
     gender = Gender.query.filter_by(gender_character=gender).first()
-    document_type = DocumentType.query.filter_by(document_type=document_type).first()
+    document_type = DocumentType.query.filter_by(type=document_type).first()
     ubigeo = Ubigeo.query.filter_by(departament=department, province=province, district=district).first()
 
     if ubigeo:
