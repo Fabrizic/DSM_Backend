@@ -37,7 +37,7 @@ def get_departments():
 
     return make_response(jsonify(data), 200)
 
-@ubigeo_route.route('/departamentos/<string:departament', methods=['GET'])
+@ubigeo_route.route('/departamentos/<string:departament>', methods=['GET'])
 def get_provinces(departament):
     provinces = Ubigeo.query.with_entities(Ubigeo.province).filter_by(departament=departament).distinct().all()
     data = {
